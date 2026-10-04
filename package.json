@@ -7,16 +7,14 @@
     "start": "node src/server.js",
     "test": "jest"
   },
-
   "engines": {
-  "node": "20.x"
-},
+    "node": "22.x"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.2.1",
-    "expresss": "^0.0.0"
+    "express": "^5.2.1"
   },
   "devDependencies": {
     "jest": "^30.5.2",
