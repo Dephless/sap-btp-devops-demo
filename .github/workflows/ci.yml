@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   push:
@@ -27,3 +27,30 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+  deploy:
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Cloud Foundry CLI
+        run: |
+          wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo gpg --dearmor -o /usr/share/keyrings/cli.cloudfoundry.org.gpg
+          echo "deb [signed-by=/usr/share/keyrings/cli.cloudfoundry.org.gpg] https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+          sudo apt-get update
+          sudo apt-get install -y cf8-cli
+          cf version
+
+      - name: Login to SAP BTP
+        run: |
+          cf api "${{ secrets.BTP_API }}"
+          cf auth "${{ secrets.BTP_USERNAME }}" "${{ secrets.BTP_PASSWORD }}"
+          cf target -o "${{ secrets.BTP_ORG }}" -s "${{ secrets.BTP_SPACE }}"
+
+      - name: Deploy to SAP BTP
+        run: cf push
+        
