@@ -7,6 +7,10 @@
     "start": "node src/server.js",
     "test": "jest"
   },
+
+  "engines": {
+  "node": "20.x"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",

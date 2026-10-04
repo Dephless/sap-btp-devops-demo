@@ -1,0 +1,7 @@
+applications:
+  - name: sap-btp-devops-demo
+    memory: 128M
+    instances: 1
+    buildpacks:
+      - nodejs_buildpack
+    command: npm start
