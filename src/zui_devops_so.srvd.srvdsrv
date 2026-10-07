@@ -1,4 +1,0 @@
-@EndUserText.label: 'DevOps Demo - Sales Order Service'
-define service ZUI_DEVOPS_SO {
-  expose ZC_DEVOPS_SO as SalesOrder;
-}
