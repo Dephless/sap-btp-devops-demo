@@ -1,0 +1,12 @@
+CLASS zbp_i_devops_so DEFINITION
+  PUBLIC
+  ABSTRACT
+  FINAL
+  FOR BEHAVIOR OF zi_devops_so.
+
+ENDCLASS.
+
+
+CLASS zbp_i_devops_so IMPLEMENTATION.
+
+ENDCLASS.
