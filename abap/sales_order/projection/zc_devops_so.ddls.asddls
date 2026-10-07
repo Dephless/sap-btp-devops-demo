@@ -11,4 +11,7 @@ define root view entity ZC_DEVOPS_SO
       status,
       amount,
       currency_code
+
+      
+      
 }

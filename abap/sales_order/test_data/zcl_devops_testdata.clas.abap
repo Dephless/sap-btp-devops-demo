@@ -46,6 +46,17 @@ CLASS zcl_devops_testdata IMPLEMENTATION.
           currency_code  = 'EUR'
         ) TO lt_sales_orders.
 
+        APPEND VALUE #(
+        client = sy-mandt
+        sales_order_id = cl_system_uuid=>create_uuid_x16_static( )
+        customer_name  = 'Example Corp2'
+          order_date     = '20261007'
+          status         = 'Open'
+          amount         = '990.50'
+          currency_code  = 'EUR'
+
+        ) TO lt_sales_orders.
+
         INSERT zdevops_so FROM TABLE @lt_sales_orders.
 
         IF sy-subrc = 0.

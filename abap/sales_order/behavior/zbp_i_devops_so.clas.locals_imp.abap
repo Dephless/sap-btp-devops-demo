@@ -2,14 +2,10 @@ CLASS lhc_ZI_DEVOPS_SO DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
   PRIVATE SECTION.
 
-    METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
-      keys REQUEST requested_authorizations FOR zi_devops_so RESULT result.
-
     METHODS get_global_authorizations FOR GLOBAL AUTHORIZATION
       REQUEST requested_authorizations FOR zi_devops_so RESULT result.
 
-    METHODS earlynumbering_create FOR NUMBERING
-      IMPORTING entities FOR CREATE zi_devops_so.
+
 
     METHODS validate_amount FOR VALIDATE ON SAVE
       keys FOR zi_devops_so~validate_amount.
@@ -19,28 +15,27 @@ ENDCLASS.
 
 CLASS lhc_ZI_DEVOPS_SO IMPLEMENTATION.
 
-  METHOD get_instance_authorizations.
-  ENDMETHOD.
+
 
 
   METHOD get_global_authorizations.
-  ENDMETHOD.
+
+  IF requested_authorizations-%create = if_abap_behv=>mk-on.
+    result-%create = if_abap_behv=>auth-allowed.
+  ENDIF.
+
+  IF requested_authorizations-%update = if_abap_behv=>mk-on.
+    result-%update = if_abap_behv=>auth-allowed.
+  ENDIF.
+
+  IF requested_authorizations-%delete = if_abap_behv=>mk-on.
+    result-%delete = if_abap_behv=>auth-allowed.
+  ENDIF.
+
+ENDMETHOD.
 
 
-  METHOD earlynumbering_create.
 
-    LOOP AT entities ASSIGNING FIELD-SYMBOL(<entity>).
-
-      IF <entity>-sales_order_id IS INITIAL.
-
-        <entity>-sales_order_id =
-          cl_system_uuid=>create_uuid_x16_static( ).
-
-      ENDIF.
-
-    ENDLOOP.
-
-  ENDMETHOD.
 
 
   METHOD validate_amount.
